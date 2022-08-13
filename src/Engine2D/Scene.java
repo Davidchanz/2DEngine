@@ -28,7 +28,7 @@ public class Scene extends JPanel {
     private int bordersize = 0;
     private ShapesObject border = new ShapesObject("Border", 1);
     private boolean Vborder = false;
-
+    //do some
     public Scene(int w, int h){
         super();
         WIDTH = w;
