@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact name="2DEngine:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/2DEngine_jar</output-path>
+    <root id="root">
+      <element id="archive" name="2DEngine.jar">
+        <element id="module-output" name="2DEngine" />
+        <element id="module-output" name="UnityMath" />
+        <element id="module-output" name="MatrixTransforms" />
+      </element>
+    </root>
+  </artifact>
+</component>
