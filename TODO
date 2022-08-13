@@ -1,0 +1,42 @@
+/**
+ *                              2DEngine
+ *
+ *              TODO 03.08.22 Create Class Map for moved map
+ *              TODO 03.08.22 Load map from file
+ *                  dont save player in map
+ *              TODO Refactor// When player moved over screen border moved map to turn of player while map not end
+ *              Make file with cube vertices and normals (from 3d cube but whith only 2 dimensions)
+ *              TODO 03.08.22 Make Camera for moved player
+ *              TODO Draw polygons from first two last "Algorithm painter"
+ *              Draw Map Border like a black space
+ *              Realize textures
+ *              TODO 03.08.22 Realize all classes with abstract prototype for interact from another project
+ *              TODO Realize class ShapeObject in which can create object from number of elementary shapea
+ *              Realize smooth camera scale through mouse well
+ *              Refactor load map and do some differ variant
+ *              Test find object
+ *              Realize function isCollision
+ *              Realize Beans properties names
+ *              Realize isCollision for border dots right, left, up, down
+ *              Realize getBorder in AbstractShape class to get the right, left, up, down borders of elementary shape
+ *              Realize setBorder in ShapeObject class for set which borders in elementary shape is real border in this composite object
+ *              Realize camera scaling
+ *              Realize simpe fithics like gravite velosity impulse acseleration e.t.c
+ *              Realize constructor id in shapeobject throught enum
+ *              Realize border set and unset and variose border color and maybe thinctnes
+ *              Fix Static
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * */
