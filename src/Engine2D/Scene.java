@@ -27,7 +27,7 @@ public class Scene extends JPanel {
     public int MinX;
     public int MinY;
     private int bordersize = 0;
-    private ShapesObject border = new ShapesObject("Border", 1);
+    private final ShapesObject border = new ShapesObject("Border", 78);
     private boolean Vborder = false;
     //do some
     public Scene(int w, int h){
@@ -74,7 +74,6 @@ public class Scene extends JPanel {
     /**Show scene border*/
     public void setBorderVisible(boolean t){
         if(t && !Vborder) {
-            this.add(this.border);
             this.Vborder = true;
         }
     }
@@ -189,6 +188,11 @@ public class Scene extends JPanel {
                 shape.paint(g, it);
             }
         }*/
+        if(Vborder) {
+            for (var shape : this.border.body) {
+                shape.paint(g, this.border);
+            }
+        }
         for (var it : objects.toArray(new ShapesObject[0])) {
             if(this.Vcenter) {
                 Vector2 tmp = new Vector2(it.center);
