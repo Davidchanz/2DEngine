@@ -16,6 +16,7 @@ import java.util.Collection;
 public class Scene extends JPanel {
     public static int WIDTH = 0;
     public static int HEIGHT = 0;
+    //add some cooment
     public static ArrayList<ShapesObject> objects = new ArrayList<>();
     private boolean Vaxis = false;
     private boolean Vcenter = false;
