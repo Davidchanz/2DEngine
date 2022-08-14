@@ -9,102 +9,98 @@ import java.util.ArrayList;
 
 /**Abstract class for Shapes on scene*/
 public abstract class AbstractShape implements ShapeMethods{
-    public int id;
-    public Vector2 position;
-    public Vector2 center;
-    public ArrayList<Vector2> vertices;
-    public int size;
-    public Color color;
-    public boolean CENTER;
-    public boolean colored;
-    public int width;
-    public int height;
-    public int angX = 0;
-    public int angY = 0;
-    public int angZ = 0;
-    public ShapesObject parent;
+    public int id;//shape's id
+    public Vector2 position;//shape's position in scene dimension
+    public Vector2 center;//shape's center position in scene dimension
+    public ArrayList<Vector2> vertices;//set of shape's vertices
+    @Deprecated public int size;//shape's size
+    public Color color;//shape's color
+    public boolean CENTER;//flag center show
+    public boolean colored;//flag fill shape color
+    public int width;//shape's width
+    public int height;//shape's height
+    public int angX = 0;//shape's angle in X axis
+    public int angY = 0;//shape's angle in Y axis
+    public int angZ = 0;//shape's angle in Z axis
+    public ShapesObject parent;//reference on parent ShapeObject
+    /**Inner constructor for ini vertices and color members.*/
     protected AbstractShape(Color c){
         this.vertices = new ArrayList<>();
         if(c != null) {this.color = c; this.colored = true;}
         else this.colored = false;
     }
-
-    /**Get vertices in screen coord in camera projection after transformation*/
+    /**Get vertices in screen dimension in camera projection after transformation.*/
     @Override
     public Vector2 getVertices(Vector2 vertices) {
-        Vector2 tmpPos = ShareRotate();
-        Vector2 screen_coord = new Vector2((int) (vertices.x), (int) (vertices.y));
-        Scene.toSceneCoord(screen_coord);
-        Vector3 newPoint = new Vector3(screen_coord, 0);
-        Vector2 sceneCenter = new Vector2(0,0);
-        Scene.toSceneCoord(sceneCenter);
+        Vector2 tmpPos = GetParentRotateCenter();//get ShapeObject rotate center coord
+        Vector2 screen_coord = new Vector2((int) (vertices.x), (int) (vertices.y));//get vertices in new variable
+        Scene.toSceneCoord(screen_coord);//get vertices coord in scene dimension
+        Vector3 newPoint = new Vector3(screen_coord, 0);//get vertices in new variable type of Vector3
+        Vector2 sceneCenter = new Vector2(0,0);//get 0,0 point
+        Scene.toSceneCoord(sceneCenter);//get 0,0 point in screen dimension
 
-        TransponeMatrix.Offset(-(int)sceneCenter.x, -(int)sceneCenter.y, 0, newPoint);
-        TransponeMatrix.RotationX(angX + parent.getAngX(), newPoint, 0, 0, 0);
-        TransponeMatrix.RotationY(angY + parent.getAngY(), newPoint, 0, 0, 0);
-        TransponeMatrix.RotationZ(angZ + parent.getAngZ(), newPoint, 0, 0, 0);
-        TransponeMatrix.Offset((int)sceneCenter.x, (int)sceneCenter.y, 0, newPoint);
+        TransponeMatrix.Offset(-(int)sceneCenter.x, -(int)sceneCenter.y, 0, newPoint);//move point in rotate's center
+        TransponeMatrix.RotationX(angX + parent.getAngX(), newPoint, 0, 0, 0);//rotate in X axis
+        TransponeMatrix.RotationY(angY + parent.getAngY(), newPoint, 0, 0, 0);//rotate in Y axis
+        TransponeMatrix.RotationZ(angZ + parent.getAngZ(), newPoint, 0, 0, 0);//rotate in Z axis
+        TransponeMatrix.Offset((int)sceneCenter.x, (int)sceneCenter.y, 0, newPoint);//move point from rotate's center
         //TransponeMatrix.Offset((int) this.position.x, (int) -(this.position.y), 0, newPoint);
-        TransponeMatrix.Offset((int) tmpPos.x, (int) -(tmpPos.y), 0, newPoint);
+        TransponeMatrix.Offset((int) tmpPos.x, (int) -(tmpPos.y), 0, newPoint);//move point in shape's position
 
-
-        newPoint = new Vector3(Scene.camera.Projection(new Vector2(newPoint.x, newPoint.y)), 0);
-
-        return new Vector2(newPoint.x, newPoint.y);
+        newPoint = new Vector3(Scene.camera.Projection(new Vector2(newPoint.x, newPoint.y)), 0);//get point coord in camera projection
+        return new Vector2(newPoint.x, newPoint.y);//return vertices point after transform
     }
-
-    /**Get list of vertices in screen coord in camera projection after transformation*/
+    /**Get list of vertices in screen dimension in camera projection after transformation.*/
     @Override
     public ArrayList<Vector2> getVertices(ArrayList<Vector2> vertices) {
-        Vector2 tmpPos = ShareRotate();
-        ArrayList<Vector2> dots = new ArrayList<>();
+        Vector2 tmpPos = GetParentRotateCenter();//get ShapeObject rotate center coord
+        ArrayList<Vector2> dots = new ArrayList<>();//ini set for return
         for (var i : vertices){
-            Vector2 screen_coord = new Vector2((int) (i.x), (int) (i.y));
-            Scene.toSceneCoord(screen_coord);
-            Vector3 newPoint = new Vector3(screen_coord, 0);
-            Vector2 sceneCenter = new Vector2(0,0);
-            Scene.toSceneCoord(sceneCenter);
+            Vector2 screen_coord = new Vector2((int) (i.x), (int) (i.y));//get vertices in new variable
+            Scene.toSceneCoord(screen_coord);//get vertices coord in scene dimension
+            Vector3 newPoint = new Vector3(screen_coord, 0);//get vertices in new variable type of Vector3
+            Vector2 sceneCenter = new Vector2(0,0);//get 0,0 point
+            Scene.toSceneCoord(sceneCenter);//get 0,0 point in screen dimension
 
-            TransponeMatrix.Offset(-(int)sceneCenter.x, -(int)sceneCenter.y, 0, newPoint);
-            TransponeMatrix.RotationX(angX+parent.getAngX(), newPoint, 0, 0, 0);
-            TransponeMatrix.RotationY(angY+parent.getAngY(), newPoint, 0, 0, 0);
-            TransponeMatrix.RotationZ(angZ+parent.getAngZ(), newPoint, 0, 0, 0);
-            TransponeMatrix.Offset((int)sceneCenter.x, (int)sceneCenter.y, 0, newPoint);
+            TransponeMatrix.Offset(-(int)sceneCenter.x, -(int)sceneCenter.y, 0, newPoint);//move point in rotate's center
+            TransponeMatrix.RotationX(angX+parent.getAngX(), newPoint, 0, 0, 0);//rotate in X axis
+            TransponeMatrix.RotationY(angY+parent.getAngY(), newPoint, 0, 0, 0);//rotate in Y axis
+            TransponeMatrix.RotationZ(angZ+parent.getAngZ(), newPoint, 0, 0, 0);//rotate in Z axis
+            TransponeMatrix.Offset((int)sceneCenter.x, (int)sceneCenter.y, 0, newPoint);//move point from rotate's center
             //TransponeMatrix.Offset((int) this.position.x, (int) -(this.position.y), 0, newPoint);
-            TransponeMatrix.Offset((int) tmpPos.x, (int) -(tmpPos.y), 0, newPoint);
+            TransponeMatrix.Offset((int) tmpPos.x, (int) -(tmpPos.y), 0, newPoint);//move point in shape's position
 
-            newPoint = new Vector3(Scene.camera.Projection(new Vector2(newPoint.x, newPoint.y)), 0);
+            newPoint = new Vector3(Scene.camera.Projection(new Vector2(newPoint.x, newPoint.y)), 0);//get point coord in camera projection
 
-            if(newPoint.x < 0 || newPoint.x >= Scene.WIDTH || newPoint.y < 0 || newPoint.y >= Scene.HEIGHT) return null;
-            else dots.add(new Vector2(newPoint.x, newPoint.y));
+            if(newPoint.x < 0 || newPoint.x >= Scene.WIDTH || newPoint.y < 0 || newPoint.y >= Scene.HEIGHT) return null;//if point out of sceen return null
+            else dots.add(new Vector2(newPoint.x, newPoint.y));//else return vertices point after transform
 
         }
         return dots;
     }
+    /**Get parent's ShapeObject for rotate.*/
+    private Vector2 GetParentRotateCenter(){
+        Vector2 screen_coord = new Vector2((int) (this.position.x), (int) (this.position.y));//get vertices in new variable
+        Scene.toSceneCoord(screen_coord);//get vertices coord in scene dimension
+        Vector3 newPoint = new Vector3(screen_coord, 0);//get vertices in new variable type of Vector3
+        Vector2 parentCenter = new Vector2(parent.center);//get parent center in new variable
+        Scene.toSceneCoord(parentCenter);//get parent's center in screen dimension
 
-    private Vector2 ShareRotate(){
-        Vector2 screen_coord = new Vector2((int) (this.position.x), (int) (this.position.y));
-        Scene.toSceneCoord(screen_coord);
-        Vector3 newPoint = new Vector3(screen_coord, 0);
-        Vector2 sceneCenter = new Vector2(parent.center);
-        Scene.toSceneCoord(sceneCenter);
+        TransponeMatrix.Offset(-(int)parentCenter.x, -(int)parentCenter.y, 0, newPoint);//move point in rotate's center
+        TransponeMatrix.RotationX(parent.getAngX(), newPoint, 0, 0, 0);//rotate in X axis
+        TransponeMatrix.RotationY(parent.getAngY(), newPoint, 0, 0, 0);//rotate in Y axis
+        TransponeMatrix.RotationZ(parent.getAngZ(), newPoint, 0, 0, 0);//rotate in Z axis
+        TransponeMatrix.Offset((int)parentCenter.x, (int)parentCenter.y, 0, newPoint);//move point from rotate's center
 
-        TransponeMatrix.Offset(-(int)sceneCenter.x, -(int)sceneCenter.y, 0, newPoint);
-        TransponeMatrix.RotationX(parent.getAngX(), newPoint, 0, 0, 0);
-        TransponeMatrix.RotationY(parent.getAngY(), newPoint, 0, 0, 0);
-        TransponeMatrix.RotationZ(parent.getAngZ(), newPoint, 0, 0, 0);
-        TransponeMatrix.Offset((int)sceneCenter.x, (int)sceneCenter.y, 0, newPoint);
-
-        var tmp = new Vector2(newPoint.x, newPoint.y);
-        Scene.fromSceneCoord(tmp);
+        var tmp = new Vector2(newPoint.x, newPoint.y);//get Vector2 from Vector3 newPoint
+        Scene.fromSceneCoord(tmp);//get parent rotate center in Scene dimension
         newPoint.x = tmp.x;
         newPoint.y = tmp.y;
 
         //newPoint = new Vector3(Scene.camera.Projection(new Vector2(newPoint.x, newPoint.y)), 0);
 
-        return new Vector2(newPoint.x, newPoint.y);
+        return new Vector2(newPoint.x, newPoint.y);//return parent rotate center
     }
-
     /**Interpolete to points*///todo explore this function
     public static ArrayList<Integer> Interpolate (float i0, float d0, float i1, float d1) {
         var values = new ArrayList<Integer>();
@@ -210,6 +206,7 @@ public abstract class AbstractShape implements ShapeMethods{
             g.drawRect((int)v1.x, (int)v2.y, 1, 1);
         }*/
     }
+    /**Fill all screen points references on according ShapeObjects*/
     //TODO
     public static void O_BUFFER(int x, int y, ShapesObject o){
         if(x >= 0 & x < Scene.WIDTH && y >= 0 & y < Scene.HEIGHT)
