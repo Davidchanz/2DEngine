@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 /**Interface for Sahpes on scene*/
 public interface ShapeMethods {
-    void paint(Graphics g, ShapesObject o);
+    void paint(Graphics g, ShapeObject o);
     ArrayList<Vector2> getVertices(ArrayList<Vector2> vertices);
     Vector2 getVertices(Vector2 vertices);
     void resize();

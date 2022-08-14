@@ -21,7 +21,7 @@ public abstract class AbstractShape implements ShapeMethods{
     public int angX = 0;//shape's angle in X axis
     public int angY = 0;//shape's angle in Y axis
     public int angZ = 0;//shape's angle in Z axis
-    public ShapesObject parent;//reference on parent ShapeObject
+    public ShapeObject parent;//reference on parent ShapeObject
     /**Inner constructor for ini vertices and color members.*/
     protected AbstractShape(Color c){
         this.vertices = new ArrayList<>();
@@ -116,7 +116,7 @@ public abstract class AbstractShape implements ShapeMethods{
         return values;
     }
     /**Draw filled triangle using interpolate*///todo exlpore this function
-    public static void DrawFilledTriangle (Vector2 v0, Vector2 v1, Vector2 v2, Graphics g, ShapesObject o) {
+    public static void DrawFilledTriangle (Vector2 v0, Vector2 v1, Vector2 v2, Graphics g, ShapeObject o) {
         // Сортировка точек так, что y0 <= y1 <= y2
         if (v0.y > v1.y) {
             var tmp = v0;
@@ -204,7 +204,7 @@ public abstract class AbstractShape implements ShapeMethods{
         }*/
     }
     /**Fill all screen points references on according ShapeObjects*/
-    public static void O_BUFFER(int x, int y, ShapesObject o){//TODO
+    public static void O_BUFFER(int x, int y, ShapeObject o){//TODO
         if(x >= 0 & x < Scene.WIDTH && y >= 0 & y < Scene.HEIGHT)
             Scene.O_BUFFER[x][y] = o;
     }

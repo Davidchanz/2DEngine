@@ -17,17 +17,17 @@ public class Scene extends JPanel {
     public static int WIDTH = 0;
     public static int HEIGHT = 0;
     //add some cooment
-    public static ArrayList<ShapesObject> objects = new ArrayList<>();
+    public static ArrayList<ShapeObject> objects = new ArrayList<>();
     private boolean Vaxis = false;
     private boolean Vcenter = false;
     public static Camera camera = new Camera();
-    public static ShapesObject[][] O_BUFFER;
+    public static ShapeObject[][] O_BUFFER;
     public int MaxX;
     public int MaxY;
     public int MinX;
     public int MinY;
     private int bordersize = 0;
-    private final ShapesObject border = new ShapesObject("Border", 78);
+    private final ShapeObject border = new ShapeObject("Border", 78);
     private boolean Vborder = false;
     //do some
     public Scene(int w, int h){
@@ -45,9 +45,9 @@ public class Scene extends JPanel {
         MinX = (int)tmp.x;
         MaxY = (int)tmp.y;
 
-        O_BUFFER = new ShapesObject[WIDTH][HEIGHT];
+        O_BUFFER = new ShapeObject[WIDTH][HEIGHT];
         for(var i: O_BUFFER){
-            Arrays.fill(i, new ShapesObject());
+            Arrays.fill(i, new ShapeObject());
         }
         this.setSize(new Dimension(WIDTH, HEIGHT));
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -57,9 +57,9 @@ public class Scene extends JPanel {
             public void componentResized(ComponentEvent componentEvent) {
                 Scene.WIDTH = getWidth();
                 Scene.HEIGHT = getHeight();
-                O_BUFFER = new ShapesObject[WIDTH][HEIGHT];
+                O_BUFFER = new ShapeObject[WIDTH][HEIGHT];
                 for(var i: O_BUFFER){
-                    Arrays.fill(i, new ShapesObject());
+                    Arrays.fill(i, new ShapeObject());
                 }
             }
         });
@@ -101,7 +101,7 @@ public class Scene extends JPanel {
     }
 
     /**find object in radius of object size*/
-    protected static ShapesObject findObject(Vector2 onPoint){//todo need testing
+    protected static ShapeObject findObject(Vector2 onPoint){//todo need testing
         for(int i = objects.size()-1; i >= 0; --i) {
             for(var shape: objects.get(i).body) {
                 int radius = shape.size;
@@ -123,7 +123,7 @@ public class Scene extends JPanel {
 
     /**Set object for moving*/
     @Deprecated
-    public static void setActiveObject(ShapesObject o){
+    public static void setActiveObject(ShapeObject o){
         //moveInput.setMovedObject(o);
     }
 
@@ -139,16 +139,16 @@ public class Scene extends JPanel {
     }
 
     /**Remove shape from scene*/
-    public void remove(ShapesObject o){
+    public void remove(ShapeObject o){
         objects.remove(o);
     }
 
     /**Add new shape on scene*/
-    public void add(ShapesObject o){
+    public void add(ShapeObject o){
         objects.add(o);
     }
 
-    public void addAll(Collection<ShapesObject> o){
+    public void addAll(Collection<ShapeObject> o){
         objects.addAll(o);
     }
 
@@ -193,7 +193,7 @@ public class Scene extends JPanel {
                 shape.paint(g, this.border);
             }
         }
-        for (var it : objects.toArray(new ShapesObject[0])) {
+        for (var it : objects.toArray(new ShapeObject[0])) {
             if(this.Vcenter) {
                 Vector2 tmp = new Vector2(it.center);
                 toSceneCoord(tmp);

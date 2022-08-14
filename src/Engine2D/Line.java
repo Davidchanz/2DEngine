@@ -74,7 +74,7 @@ public class Line extends AbstractShape{
     }
     /**Method paint*/
     @Override
-    public void paint(Graphics g, ShapesObject o) {
+    public void paint(Graphics g, ShapeObject o) {
         ArrayList<Vector2> dots = getVertices(this.vertices);//get vertices point in screen dimension
         if(dots == null) return;//if no points for paint return
         if(this.colored) g.setColor(this.color);//if color flag true fill object

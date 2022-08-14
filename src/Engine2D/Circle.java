@@ -40,7 +40,7 @@ public class Circle extends AbstractShape{
     }
     /**Method for paint on scene*/
     @Override
-    public void paint(Graphics g, ShapesObject o) {
+    public void paint(Graphics g, ShapeObject o) {
         ArrayList<Vector2> dots = getVertices(this.vertices);//get vertices for paint in screen dimension
         if(dots == null) return;//if no points for paint return
         if(colored) {//if color flag true fill object

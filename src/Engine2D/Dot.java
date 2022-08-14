@@ -18,7 +18,7 @@ public class Dot extends AbstractShape{
     }
     /**Method for paint*/
     @Override
-    public void paint(Graphics g, ShapesObject o) {
+    public void paint(Graphics g, ShapeObject o) {
         Vector2 tmp = getVertices(this.vertices.get(0));//get vertices point in screen dimension
         g.setColor(this.color);//set color object color
         g.fillRect((int)tmp.x, (int)tmp.y, this.size, this.size);//paint dot dot's size
