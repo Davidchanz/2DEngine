@@ -13,71 +13,73 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+/**Scene for 2D graphics*/
 public class Scene extends JPanel {
-    public static int WIDTH = 0;
-    public static int HEIGHT = 0;
-    //add some cooment
-    public static ArrayList<ShapeObject> objects = new ArrayList<>();
-    private boolean Vaxis = false;
-    private boolean Vcenter = false;
-    public static Camera camera = new Camera();
-    public static ShapeObject[][] O_BUFFER;
-    public int MaxX;
-    public int MaxY;
-    public int MinX;
-    public int MinY;
-    private int bordersize = 0;
-    private final ShapeObject border = new ShapeObject("Border", 78);
-    private boolean Vborder = false;
-    //do some
+    public static int WIDTH = 0;//Scene width
+    public static int HEIGHT = 0;//Scene height
+    public static ArrayList<ShapeObject> objects = new ArrayList<>();//set objects for painting
+    private boolean Vaxis = false;//flag show axis XOY on scene
+    private boolean Vcenter = false;//flag show objects centers
+    public static Camera camera = new Camera();//camera
+    public static ShapeObject[][] O_BUFFER;//TODO
+    public int MaxX;//Max possible x
+    public int MaxY;//Max possible y
+    public int MinX;//Min possible x
+    public int MinY;//Min possible y
+    private final ShapeObject border = new ShapeObject("Border", 78);//Scene border
+    private boolean Vborder = false;//flag show scene border
+    /**Scene constructor
+     * ini width, height, maxX, maxY, minX, minY, */
     public Scene(int w, int h){
-        super();
-        WIDTH = w;
-        HEIGHT = h;
+        super();//invoke JPanel constructor
+        WIDTH = w;//ini width
+        HEIGHT = h;//ini height
 
         var tmp = new Vector2(w, h);
-        fromSceneCoord(tmp);
-        MaxX = (int)tmp.x;
-        MinY = (int)tmp.y;
+        toScreenDimension(tmp);//get w, h in scene dimension
+        MaxX = (int)tmp.x;//ini MaxX
+        MinY = (int)tmp.y;//ini MaxY
 
         tmp = new Vector2(0,0);
-        fromSceneCoord(tmp);
-        MinX = (int)tmp.x;
-        MaxY = (int)tmp.y;
-
-        O_BUFFER = new ShapeObject[WIDTH][HEIGHT];
-        for(var i: O_BUFFER){
-            Arrays.fill(i, new ShapeObject());
-        }
-        this.setSize(new Dimension(WIDTH, HEIGHT));
-        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        this.setVisible(true);
-
-        this.addComponentListener(new ComponentAdapter() {
+        toScreenDimension(tmp);//get w, h in scene dimension
+        MinX = (int)tmp.x;//ini MinX
+        MaxY = (int)tmp.y;//ini MinY
+        //TODO
+            O_BUFFER = new ShapeObject[WIDTH][HEIGHT];
+            for(var i: O_BUFFER){
+                Arrays.fill(i, new ShapeObject());
+            }
+        //TODO
+        this.setSize(new Dimension(WIDTH, HEIGHT));//ini scene size
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));//ini scene preferred size
+        this.setVisible(true);//set scene visible
+        this.addComponentListener(new ComponentAdapter() {//add action on scene size change
             public void componentResized(ComponentEvent componentEvent) {
-                Scene.WIDTH = getWidth();
-                Scene.HEIGHT = getHeight();
-                O_BUFFER = new ShapeObject[WIDTH][HEIGHT];
-                for(var i: O_BUFFER){
-                    Arrays.fill(i, new ShapeObject());
-                }
+                WIDTH = getWidth();//ini new Scene width
+                HEIGHT = getHeight();//ini new scene height
+                //TODO
+                    O_BUFFER = new ShapeObject[WIDTH][HEIGHT];
+                    for(var i: O_BUFFER){
+                        Arrays.fill(i, new ShapeObject());
+                    }
+                //TODO
             }
         });
     }
+    /**Method set Border
+     * set border size and color*/
     public void setBorder(int size, Color c){
-        this.bordersize = size;
-        this.border.add(new Rectangle(bordersize/4, MaxX-1, new Vector2(0, MaxY-bordersize/4), c));
-        this.border.add(new Rectangle(bordersize/4, MaxX-1, new Vector2(0, MinY+bordersize/4+1), c));
-        this.border.add(new Rectangle(MaxY-1, bordersize/4, new Vector2(MaxX-bordersize/4-1, 0), c));
-        this.border.add(new Rectangle(MaxY-1, bordersize/4, new Vector2(MinX+bordersize/4, 0), c));
+        this.border.add(new Rectangle(size, MaxX-1, new Vector2(0, MaxY-size), c));//ini border top
+        this.border.add(new Rectangle(size, MaxX-1, new Vector2(0, MinY+size+1), c));//ini border bot
+        this.border.add(new Rectangle(MaxY-1, size, new Vector2(MaxX-size-1, 0), c));//ini border right
+        this.border.add(new Rectangle(MaxY-1, size, new Vector2(MinX+size, 0), c));//ini border left
     }
     /**Show scene border*/
     public void setBorderVisible(boolean t){
         if(t && !Vborder) {
-            this.Vborder = true;
+            this.Vborder = true;//set border show flag true
         }
     }
-
     /**Load map from file. Version for block's games*/
     @Deprecated
     public void loadMap(String path){
@@ -92,116 +94,89 @@ public class Scene extends JPanel {
     }
     /**Show XOY coord axis*/
     public void setCoordVisible(boolean b){
-        this.Vaxis = b;
+        this.Vaxis = b;//set axis show flag true
     }
-
     /**Show XOY center objects*/
     public void setCenterVisible(boolean b){
-        this.Vcenter = b;
+        this.Vcenter = b;//set center show flag true
     }
-
-    /**find object in radius of object size*/
+    /**Find object in radius of object size*/
     protected static ShapeObject findObject(Vector2 onPoint){//todo need testing
-        for(int i = objects.size()-1; i >= 0; --i) {
-            for(var shape: objects.get(i).body) {
-                int radius = shape.size;
-                int positionX = (int) onPoint.x;
-                int positionY = (int) onPoint.y;
-                //System.out.println("X: " + positionX + " Y:" + positionY);
-
-                Vector2 tmp = shape.getVertices(shape.center);
-                float positionCenterX = tmp.x;
-                float positionCenterY = tmp.y;
-                if (Math.sqrt(Math.pow((double) (positionX - positionCenterX), 2.0) + Math.pow((double) (positionY - positionCenterY), 2.0)) <= Math.sqrt(radius * radius)) {
-                    //System.out.println("X: " + positionCenterX + " Y:" + positionCenterY);
-                    return objects.get(i);
+        for(var object: objects) {
+            for(var shape: object.body) {
+                int radius = Math.max(shape.width,shape.height);//ini search radius
+                Vector2 positionCenter = shape.getVertices(shape.center);//get shape center in after transform
+                if (Math.sqrt(Math.pow(onPoint.x - positionCenter.x, 2.0) + Math.pow(onPoint.y - positionCenter.y, 2.0)) <= Math.sqrt(radius * radius)) {
+                    return object;//if shape radius into search radius we found according shape and return shape's object
                 }
             }
         }
-        return null;
+        return null;//if we don't find any according shape return null
     }
-
     /**Set object for moving*/
     @Deprecated
     public static void setActiveObject(ShapeObject o){
         //moveInput.setMovedObject(o);
     }
-
-    /**Offset form XOY coords to Screen coords ([0,0] = [WIDTH/2, HEIGHT/2])*/
-    public static void toSceneCoord(Vector2 point){
+    /**Get point in scene dimension*/
+    public static void toSceneDimension(Vector2 point){
         point.x = point.x + WIDTH/2;
         point.y = -(point.y - HEIGHT/2);
     }
-
-    public static void fromSceneCoord(Vector2 point){
+    /**Get point in screen dimension*/
+    public static void toScreenDimension(Vector2 point){
         point.x = point.x - WIDTH/2;
         point.y = HEIGHT/2 - point.y;
     }
-
     /**Remove shape from scene*/
     public void remove(ShapeObject o){
         objects.remove(o);
     }
-
     /**Add new shape on scene*/
     public void add(ShapeObject o){
         objects.add(o);
     }
-
+    /**Add all shape in collection on scene*/
     public void addAll(Collection<ShapeObject> o){
         objects.addAll(o);
     }
-
     /**Paint on the Image ande draw it*/
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Create an off-screen image and fill a rectangle with red
-        int w = this.getWidth();
-        int h = this.getHeight();
-        Image offScreenImage = this.createImage(w, h);
-        Graphics imageGraphics = offScreenImage.getGraphics();
-        draw(imageGraphics);
+        // Create an off-screen image
+        Image offScreenImage = this.createImage(WIDTH, HEIGHT);
+        Graphics imageGraphics = offScreenImage.getGraphics();//get image graphics
+        draw(imageGraphics);//invoke draw method with image graphics
         // Draw the offscreen image on the JPanel
         g.drawImage(offScreenImage, 0, 0, null);
     }
-
-    /**Draw function use g for reference on image graphics*/
+    /**Draw method
+     *  paint scene's objects on ImageGraphics*/
     private void draw(Graphics g){
-        if(this.Vaxis) {
-            g.setColor(Color.BLACK);
-            g.drawLine(0, HEIGHT / 2, WIDTH, HEIGHT / 2);
-            g.drawLine(WIDTH / 2, 0, WIDTH / 2, HEIGHT);
+        if(this.Vaxis) {//if flag axis true paint XOY axis
+            g.setColor(Color.BLACK);//set color BLACK
+            g.drawLine(0, HEIGHT / 2, WIDTH, HEIGHT / 2);//paint -XOX
+            g.drawLine(WIDTH / 2, 0, WIDTH / 2, HEIGHT);//paint -YOY
             Vector2 zero = new Vector2(0, 0);
-            toSceneCoord(zero);
-            g.setColor(Color.RED);
-            g.fillRect((int) zero.x-1, (int) zero.y-1, 2, 2);
+            toSceneDimension(zero);//get center 0,0 in scene dimension
+            g.setColor(Color.RED);//set color RED
+            g.fillRect((int) zero.x-1, (int) zero.y-1, 2, 2);//paint O(XOY) - center point
         }
-        /*for (var it : objects) {
-            if(this.Vcenter) {
-                Vector2 tmp = new Vector2(it.center);
-                toSceneCoord(tmp);
-                g.setColor(Color.MAGENTA);
-                g.fillRect((int) tmp.x, (int) tmp.y, 3, 3);
-            }
-            for(var shape: it.body) {
-                shape.paint(g, it);
-            }
-        }*/
-        if(Vborder) {
+        if(Vborder) {//if flag border true paint scene border
             for (var shape : this.border.body) {
-                shape.paint(g, this.border);
+                shape.paint(g, this.border);//paint border's shapes
             }
         }
         for (var it : objects.toArray(new ShapeObject[0])) {
-            if(this.Vcenter) {
+            if(this.Vcenter) {//if flag center true paint shapes centers
                 Vector2 tmp = new Vector2(it.center);
-                toSceneCoord(tmp);
-                g.setColor(Color.MAGENTA);
-                g.fillRect((int) tmp.x, (int) tmp.y, 3, 3);
+                toSceneDimension(tmp);//get shape's center in scene dimension
+                g.setColor(Color.MAGENTA);//set color MAGENTA
+                g.fillRect((int) tmp.x, (int) tmp.y, 3, 3);//paint shape's center
             }
             for(var shape: it.body.toArray(new AbstractShape[0])) {
-                shape.paint(g, it);
+                shape.paint(g, it);//paint shapes
             }
         }
     }

@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**Abstract class for Shapes on scene*/
-public abstract class AbstractShape implements ShapeMethods{
+public abstract class AbstractShape implements ShapeMethod {
     public int id;//shape's id
     public Vector2 position;//shape's position in scene dimension
     public Vector2 center;//shape's center position in scene dimension
@@ -33,15 +33,15 @@ public abstract class AbstractShape implements ShapeMethods{
     public Vector2 getVertices(Vector2 vertices) {
         Vector2 tmpPos = getParentRotateCenter();//get ShapeObject rotate center coord
         Vector2 screen_coord = new Vector2((int) (vertices.x), (int) (vertices.y));//get vertices in new variable
-        Scene.toSceneCoord(screen_coord);//get vertices coord in scene dimension
+        Scene.toSceneDimension(screen_coord);//get vertices coord in scene dimension
         Vector3 newPoint = new Vector3(screen_coord, 0);//get vertices in new variable type of Vector3
         Vector2 sceneCenter = new Vector2(0,0);//get 0,0 point
-        Scene.toSceneCoord(sceneCenter);//get 0,0 point in screen dimension
+        Scene.toSceneDimension(sceneCenter);//get 0,0 point in screen dimension
 
         TransponeMatrix.Offset(-(int)sceneCenter.x, -(int)sceneCenter.y, 0, newPoint);//move point in rotate's center
-        TransponeMatrix.RotationX(angX + parent.getAngX(), newPoint, 0, 0, 0);//rotate in X axis
-        TransponeMatrix.RotationY(angY + parent.getAngY(), newPoint, 0, 0, 0);//rotate in Y axis
-        TransponeMatrix.RotationZ(angZ + parent.getAngZ(), newPoint, 0, 0, 0);//rotate in Z axis
+        TransponeMatrix.RotationX(angX + parent.angX, newPoint, 0, 0, 0);//rotate in X axis
+        TransponeMatrix.RotationY(angY + parent.angY, newPoint, 0, 0, 0);//rotate in Y axis
+        TransponeMatrix.RotationZ(angZ + parent.angZ, newPoint, 0, 0, 0);//rotate in Z axis
         TransponeMatrix.Offset((int)sceneCenter.x, (int)sceneCenter.y, 0, newPoint);//move point from rotate's center
         //TransponeMatrix.Offset((int) this.position.x, (int) -(this.position.y), 0, newPoint);
         TransponeMatrix.Offset((int) tmpPos.x, (int) -(tmpPos.y), 0, newPoint);//move point in shape's position
@@ -56,15 +56,15 @@ public abstract class AbstractShape implements ShapeMethods{
         ArrayList<Vector2> dots = new ArrayList<>();//ini set for return
         for (var i : vertices){
             Vector2 screen_coord = new Vector2((int) (i.x), (int) (i.y));//get vertices in new variable
-            Scene.toSceneCoord(screen_coord);//get vertices coord in scene dimension
+            Scene.toSceneDimension(screen_coord);//get vertices coord in scene dimension
             Vector3 newPoint = new Vector3(screen_coord, 0);//get vertices in new variable type of Vector3
             Vector2 sceneCenter = new Vector2(0,0);//get 0,0 point
-            Scene.toSceneCoord(sceneCenter);//get 0,0 point in screen dimension
+            Scene.toSceneDimension(sceneCenter);//get 0,0 point in screen dimension
 
             TransponeMatrix.Offset(-(int)sceneCenter.x, -(int)sceneCenter.y, 0, newPoint);//move point in rotate's center
-            TransponeMatrix.RotationX(angX+parent.getAngX(), newPoint, 0, 0, 0);//rotate in X axis
-            TransponeMatrix.RotationY(angY+parent.getAngY(), newPoint, 0, 0, 0);//rotate in Y axis
-            TransponeMatrix.RotationZ(angZ+parent.getAngZ(), newPoint, 0, 0, 0);//rotate in Z axis
+            TransponeMatrix.RotationX(angX+parent.angX, newPoint, 0, 0, 0);//rotate in X axis
+            TransponeMatrix.RotationY(angY+parent.angY, newPoint, 0, 0, 0);//rotate in Y axis
+            TransponeMatrix.RotationZ(angZ+parent.angZ, newPoint, 0, 0, 0);//rotate in Z axis
             TransponeMatrix.Offset((int)sceneCenter.x, (int)sceneCenter.y, 0, newPoint);//move point from rotate's center
             //TransponeMatrix.Offset((int) this.position.x, (int) -(this.position.y), 0, newPoint);
             TransponeMatrix.Offset((int) tmpPos.x, (int) -(tmpPos.y), 0, newPoint);//move point in shape's position
@@ -80,19 +80,19 @@ public abstract class AbstractShape implements ShapeMethods{
     /**Get parent's ShapeObject for rotate.*/
     private Vector2 getParentRotateCenter(){
         Vector2 screen_coord = new Vector2((int) (this.position.x), (int) (this.position.y));//get vertices in new variable
-        Scene.toSceneCoord(screen_coord);//get vertices coord in scene dimension
+        Scene.toSceneDimension(screen_coord);//get vertices coord in scene dimension
         Vector3 newPoint = new Vector3(screen_coord, 0);//get vertices in new variable type of Vector3
         Vector2 parentCenter = new Vector2(parent.center);//get parent center in new variable
-        Scene.toSceneCoord(parentCenter);//get parent's center in screen dimension
+        Scene.toSceneDimension(parentCenter);//get parent's center in screen dimension
 
         TransponeMatrix.Offset(-(int)parentCenter.x, -(int)parentCenter.y, 0, newPoint);//move point in rotate's center
-        TransponeMatrix.RotationX(parent.getAngX(), newPoint, 0, 0, 0);//rotate in X axis
-        TransponeMatrix.RotationY(parent.getAngY(), newPoint, 0, 0, 0);//rotate in Y axis
-        TransponeMatrix.RotationZ(parent.getAngZ(), newPoint, 0, 0, 0);//rotate in Z axis
+        TransponeMatrix.RotationX(parent.angX, newPoint, 0, 0, 0);//rotate in X axis
+        TransponeMatrix.RotationY(parent.angY, newPoint, 0, 0, 0);//rotate in Y axis
+        TransponeMatrix.RotationZ(parent.angZ, newPoint, 0, 0, 0);//rotate in Z axis
         TransponeMatrix.Offset((int)parentCenter.x, (int)parentCenter.y, 0, newPoint);//move point from rotate's center
 
         var tmp = new Vector2(newPoint.x, newPoint.y);//get Vector2 from Vector3 newPoint
-        Scene.fromSceneCoord(tmp);//get parent rotate center in Scene dimension
+        Scene.toScreenDimension(tmp);//get parent rotate center in Scene dimension
         newPoint.x = tmp.x;
         newPoint.y = tmp.y;
 
