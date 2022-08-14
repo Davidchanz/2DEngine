@@ -64,7 +64,7 @@ public class Circle extends AbstractShape{
             g.fillRect((int) zero.x, (int) zero.y, 2, 2);//paint center point
         }
     }
-    /**resize object*/
+    /**Method for resize object*/
     @Override
     public void resize() {
         this.vertices.clear();//clear old vertices

@@ -13,7 +13,6 @@ public abstract class AbstractShape implements ShapeMethods{
     public Vector2 position;//shape's position in scene dimension
     public Vector2 center;//shape's center position in scene dimension
     public ArrayList<Vector2> vertices;//set of shape's vertices
-    @Deprecated public int size;//shape's size
     public Color color;//shape's color
     public boolean CENTER;//flag center show
     public boolean colored;//flag fill shape color
