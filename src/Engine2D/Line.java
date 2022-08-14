@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 /**Class Line*/
 public class Line extends AbstractShape{
+    public int size;
     public enum TYPE{//Line type
         HORIZONTAL,
         VERTICAL,
@@ -60,6 +61,7 @@ public class Line extends AbstractShape{
         this.vertices.add(new Vector2(this.end));//add vertices end
         this.center = new Vector2((this.start.x + this.end.x)/2,(this.start.y + this.end.y)/2);//ini center
         this.position = new Vector2(pos);//ini position
+        this.size = (int)Math.sqrt(((start.x - end.x) * (start.x - end.x)) + ((start.y - end.y) * (start.y - end.y)));
     }
     /**Line constructor
      * throught start, end points*/
@@ -71,6 +73,7 @@ public class Line extends AbstractShape{
         this.vertices.add(new Vector2(this.start));//add vertices start
         this.vertices.add(new Vector2(this.end));//add vertices end
         this.position = new Vector2(pos);//ini position
+        this.size = (int)Math.sqrt(((start.x - end.x) * (start.x - end.x)) + ((start.y - end.y) * (start.y - end.y)));
     }
     /**Method paint*/
     @Override
