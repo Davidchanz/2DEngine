@@ -5,103 +5,74 @@ import UnityMath.Vector2;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**Class 2D Circle*/
 public class Circle extends AbstractShape{
-
+    /**Circle constructor for oval
+     * ini height, width, position, color
+     * compute and add vertices for circle*/
     public Circle(int height, int width, Vector2 pos, Color c){
-        super(c);
-        this.size = 1;
-        this.height = height;
-        this.width = width;
-        this.position = new Vector2(pos);
-        this.center = new Vector2(0,0);
+        super(c);//ini AbstractShape constructor
+        this.height = height;//ini height
+        this.width = width;//ini width
+        this.position = new Vector2(pos);//ini position
+        this.center = new Vector2(0,0);//ini center 0,0
         for(double angle = 0.0; angle <= Math.PI * 2; angle += 1.0/Math.min(this.width, this.height)) {
             double x = this.width * Math.sin(angle);
             double y = this.height * Math.cos(angle);
-            this.vertices.add(new Vector2((float) x,(float) y));
+            this.vertices.add(new Vector2((float) x,(float) y));//add point in vertices
         }
-
-        /*double n = (2 * Math.PI) * Math.min(this.width, this.height);
-        double radius = Math.min(this.width, this.height)/n;
-        for (double angle = 0.0; angle < (2.0 * Math.PI); angle += (2 * Math.PI) / n)
-        {
-            double x = (((this.width) * Math.cos(angle + (Math.PI / n)/(n / 2))));
-            double y = (((this.height) * Math.sin(angle + (Math.PI / n)/(n / 2))));
-
-            this.vertices.add(new Vector2((float) x,(float) y));
-        }*/
-
     }
-    public Circle(int size, Vector2 pos, Color c){
-        super(c);
-        this.position = new Vector2(pos);
-        this.center = new Vector2(0,0);
-        this.size = size;
-        this.height = size;
-        this.width = size;
+    /**Circle constructor for circle
+     * ini height, width, position, color
+     * compute and add vertices for circle
+     * radius = width = height*/
+    public Circle(int radius, Vector2 pos, Color c){
+        super(c);//ini AbstractShape constructor
+        this.position = new Vector2(pos);//ini position
+        this.center = new Vector2(0,0);//ini center 0,0
+        this.height = radius;//ini height
+        this.width = radius;//ini width
         for(double angle = 0.0; angle <= Math.PI * 2; angle += 1.0/ this.width) {
             double x = this.width * Math.sin(angle);
             double y = this.height * Math.cos(angle);
-            this.vertices.add(new Vector2((float) x,(float) y));
+            this.vertices.add(new Vector2((float) x,(float) y));//add point in vertices
         }
-
-        /*double n = (2 * Math.PI) * size;
-        double radius = size/n;
-        for (double angle = 0.0; angle < (2.0 * Math.PI); angle += (2 * Math.PI) / n)
-        {
-            double x = (((radius * n) * Math.cos(angle + (Math.PI / n)/(n / 2))));
-            double y = (((radius * n) * Math.sin(angle + (Math.PI / n)/(n / 2))));
-
-            this.vertices.add(new Vector2((float) x,(float) y));
-        }*/
     }
-
+    /**Method for paint on scene*/
     @Override
     public void paint(Graphics g, ShapesObject o) {
-        //todo
-        ArrayList<Vector2> dots = getVertices(this.vertices);
-        if(dots == null) return;
-        if(colored) {
-            g.setColor(this.color);
-            int i = 0;
+        ArrayList<Vector2> dots = getVertices(this.vertices);//get vertices for paint in screen dimension
+        if(dots == null) return;//if no points for paint return
+        if(colored) {//if color flag true fill object
+            g.setColor(this.color);//set color object color
+            int i = 0;//ini count
             do{
-                Vector2 p1 = dots.get(0);
-                Vector2 p2 = dots.get(i);
-                Brezenheim(p1, p2, g);
-                i++;
-            }while(i < (dots.size()));
-
-            /*int i = 1;
-            do{
-                Vector2 p1 = dots.get(i);
-                Vector2 p2 = dots.get(dots.size()-i);
-                Brezenheim(p1, p2, g);
-                i++;
-            }while (i < (dots.size()));*/
-
-
+                Vector2 p1 = dots.get(0);//get first vertices point
+                Vector2 p2 = dots.get(i);//get i vertices point
+                Brezenheim(p1, p2, g);//paint line from first point to i point
+                i++;//inc i
+            }while(i < (dots.size()));//when paint all points break
         }
-        g.setColor(Color.BLACK);
+        g.setColor(Color.BLACK);//set color objet color
         for(int i = 0; i < dots.size()-1; ++i){
-            Brezenheim(dots.get(i), dots.get(i+1), g);
+            Brezenheim(dots.get(i), dots.get(i+1), g);//paint line form i to i+1 point
         }
-        Brezenheim(dots.get(dots.size()-1), dots.get(0), g);
-
-        if(this.CENTER) {
-            Vector2 zero = getVertices(this.center);
-            g.setColor(Color.RED);
-            g.fillRect((int) zero.x, (int) zero.y, 2, 2);
+        Brezenheim(dots.get(dots.size()-1), dots.get(0), g);//paint line from last to first point
+        if(this.CENTER) {//if center flag true paint center point
+            Vector2 zero = getVertices(this.center);//get object center in screen dimension
+            g.setColor(Color.RED);//sen color for center point RED
+            g.fillRect((int) zero.x, (int) zero.y, 2, 2);//paint center point
         }
-        //g.fillOval((int)this.position.x, (int)this.position.y, this.radius, this.radius);
     }
-
+    /**resize object*/
     @Override
     public void resize() {
-        this.vertices.clear();
-        this.center = new Vector2(this.position);
+        this.vertices.clear();//clear old vertices
+        this.center = new Vector2(this.position);//ini new center TODO
         for(double angle = 0.0; angle <= Math.PI * 2; angle += 1.0/Math.min(this.width, this.height)) {
             double x = this.width * Math.sin(angle);
             double y = this.height * Math.cos(angle);
-            this.vertices.add(new Vector2((float) x,(float) y));
+            this.vertices.add(new Vector2((float) x,(float) y));//add new vertices
         }
     }
 }

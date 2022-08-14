@@ -11,7 +11,7 @@ public class Camera {
         this.position = new Vector2(0,0);
     }
     /**Fake camera: move world coords instead camera projection*/
-    public Vector2 Projection(Vector2 v){
+    public Vector2 projection(Vector2 v){
         return new Vector2(v.x  - this.position.x,v.y - this.position.y);//move point in opposite direction from camera position
     }
 }
