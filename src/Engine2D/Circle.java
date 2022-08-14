@@ -53,14 +53,14 @@ public class Circle extends AbstractShape{
                 i++;//inc i
             }while(i < (dots.size()));//when paint all points break
         }
-        g.setColor(Color.BLACK);//set color objet color
+        g.setColor(Color.BLACK);//set color BLACK
         for(int i = 0; i < dots.size()-1; ++i){
             Brezenheim(dots.get(i), dots.get(i+1), g);//paint line form i to i+1 point
         }
         Brezenheim(dots.get(dots.size()-1), dots.get(0), g);//paint line from last to first point
         if(this.CENTER) {//if center flag true paint center point
             Vector2 zero = getVertices(this.center);//get object center in screen dimension
-            g.setColor(Color.RED);//sen color for center point RED
+            g.setColor(Color.RED);//set color for center point RED
             g.fillRect((int) zero.x, (int) zero.y, 2, 2);//paint center point
         }
     }
