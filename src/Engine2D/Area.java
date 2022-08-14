@@ -12,11 +12,16 @@ public class Area extends AbstractShape{
         super(c);
         this.height = radius;//ini height
         this.width = radius;//ini width
+        if(end < start){
+            var tmp = start;
+            start = end;
+            end = tmp;
+        }
         this.start = start;
         this.end = end;
         this.position = new Vector2(pos);//ini position
         this.center = new Vector2(0,0);//ini center 0,0
-        for(double angle = start; angle <= end; angle += 1.0/Math.min(this.width, this.height)) {
+        for(double angle = this.start; angle <= this.end; angle += 1.0/Math.min(this.width, this.height)) {
             double x = this.width * Math.sin(angle);
             double y = this.height * Math.cos(angle);
             this.vertices.add(new Vector2((float) x,(float) y));//add point in vertices
@@ -50,8 +55,7 @@ public class Area extends AbstractShape{
 
     @Override
     public void resize() {
-        this.vertices.clear();//clear old vertices
-        this.center = new Vector2(this.position);//ini new center TODO
+        this.vertices.clear();//clear old vertice
         if(end < start){
             var tmp = start;
             start = end;
