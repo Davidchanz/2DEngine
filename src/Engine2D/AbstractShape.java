@@ -29,7 +29,6 @@ public abstract class AbstractShape implements ShapeMethod {
         else this.colored = false;
     }
     /**Get vertices in screen dimension in camera projection after transformation.*/
-    @Override
     public Vector2 getVertices(Vector2 vertices) {
         Vector2 tmpPos = getParentRotateCenter();//get ShapeObject rotate center coord
         Vector2 screen_coord = new Vector2((int) (vertices.x), (int) (vertices.y));//get vertices in new variable
@@ -50,7 +49,6 @@ public abstract class AbstractShape implements ShapeMethod {
         return new Vector2(newPoint.x, newPoint.y);//return vertices point after transform
     }
     /**Get list of vertices in screen dimension in camera projection after transformation.*/
-    @Override
     public ArrayList<Vector2> getVertices(ArrayList<Vector2> vertices) {
         Vector2 tmpPos = getParentRotateCenter();//get ShapeObject rotate center coord
         ArrayList<Vector2> dots = new ArrayList<>();//ini set for return

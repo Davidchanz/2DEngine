@@ -41,7 +41,7 @@ public class Scene extends JPanel {
         MinY = (int)tmp.y;//ini MaxY
 
         tmp = new Vector2(0,0);
-        toScreenDimension(tmp);//get w, h in scene dimension
+        toScreenDimension(tmp);//get 0, 0 in scene dimension
         MinX = (int)tmp.x;//ini MinX
         MaxY = (int)tmp.y;//ini MinY
         //TODO
