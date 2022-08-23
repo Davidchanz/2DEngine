@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**Class for Rectangles*/
-public class Rectangle extends AbstractShape{
+public class Rectangle extends AbstractShape implements Resizing{
     public Triangle Top;//Top Triangle
     public Triangle Bot;//Bot Triangle
     /**Rectangle constructor

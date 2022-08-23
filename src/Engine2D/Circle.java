@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**Class 2D Circle*/
-public class Circle extends AbstractShape{
+public class Circle extends AbstractShape implements Resizing{
     /**Circle constructor for oval
      * ini height, width, position, color
      * compute and add vertices for circle*/

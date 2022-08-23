@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**Abstract class for Shapes on scene*/
-public abstract class AbstractShape implements ShapeMethod {
+public abstract class AbstractShape implements Painting {
     public int id;//shape's id
     public Vector2 position;//shape's position in scene dimension
     public Vector2 center;//shape's center position in scene dimension

@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**Class for Triangle*/
-public class Triangle extends AbstractShape{
+public class Triangle extends AbstractShape implements Resizing{
     public Vector2 P0;//first triangle vertice
     public Vector2 P1;//second triangle vertice
     public Vector2 P2;//third triangle vertice

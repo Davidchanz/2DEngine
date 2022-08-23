@@ -23,9 +23,4 @@ public class Dot extends AbstractShape{
         g.setColor(this.color);//set color object color
         g.fillRect((int)tmp.x, (int)tmp.y, this.size, this.size);//paint dot dot's size
     }
-    /**Method resize*/
-    @Override
-    public void resize() {
-
-    }
 }

@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**Class Line*/
-public class Line extends AbstractShape{
+public class Line extends AbstractShape implements Resizing{
     public int size;
     public enum TYPE{//Line type
         HORIZONTAL,

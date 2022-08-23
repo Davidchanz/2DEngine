@@ -5,7 +5,7 @@ import UnityMath.Vector2;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Area extends AbstractShape{
+public class Area extends AbstractShape implements Resizing{
     public double start;
     public double end;
     public Area(int radius, double start, double end, Vector2 pos, Color c){
