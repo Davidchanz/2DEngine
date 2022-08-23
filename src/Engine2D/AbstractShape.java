@@ -8,19 +8,13 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**Abstract class for Shapes on scene*/
-public abstract class AbstractShape implements Painting {
-    public int id;//shape's id
-    public Vector2 position;//shape's position in scene dimension
-    public Vector2 center;//shape's center position in scene dimension
+public abstract class AbstractShape extends EngineObject implements Painting {
     public ArrayList<Vector2> vertices;//set of shape's vertices
     public Color color;//shape's color
     public boolean CENTER;//flag center show
     public boolean colored;//flag fill shape color
     public int width;//shape's width
     public int height;//shape's height
-    public int angX = 0;//shape's angle in X axis
-    public int angY = 0;//shape's angle in Y axis
-    public int angZ = 0;//shape's angle in Z axis
     public ShapeObject parent;//reference on parent ShapeObject
     /**Inner constructor for ini vertices and color members.*/
     protected AbstractShape(Color c){

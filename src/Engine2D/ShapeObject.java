@@ -7,15 +7,9 @@ import java.util.Collection;
 
 //todo
 /**Class for scene object which especially is a list of AbstractShape elements*/
-public class ShapeObject {
+public class ShapeObject extends EngineObject{
     public final ArrayList<AbstractShape> body;//set of Abstract shape
     public String name;//name
-    public int id;//id
-    public int angX;//angle of X axis
-    public int angY;//angle of Y axis
-    public int angZ;//angle of Z axis
-    public Vector2 center;//center
-    public Vector2 position;//position
     /**ShapeObject constructor
      * ini all members default*/
     public ShapeObject(){
