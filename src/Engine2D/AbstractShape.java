@@ -93,7 +93,7 @@ public abstract class AbstractShape extends EngineObject implements Painting {
         return new Vector2(newPoint.x, newPoint.y);//return parent rotate center
     }
     /**Interpolete to points*///todo explore this function
-    public static ArrayList<Integer> Interpolate (float i0, float d0, float i1, float d1) {
+    public ArrayList<Integer> Interpolate (float i0, float d0, float i1, float d1) {
         var values = new ArrayList<Integer>();
         if (i0 == i1) {
             values.add((int)d0);
@@ -108,7 +108,7 @@ public abstract class AbstractShape extends EngineObject implements Painting {
         return values;
     }
     /**Draw filled triangle using interpolate*///todo exlpore this function
-    public static void DrawFilledTriangle (Vector2 v0, Vector2 v1, Vector2 v2, Graphics g, ShapeObject o) {
+    public void DrawFilledTriangle (Vector2 v0, Vector2 v1, Vector2 v2, Graphics g, ShapeObject o) {
         // Сортировка точек так, что y0 <= y1 <= y2
         if (v0.y > v1.y) {
             var tmp = v0;
@@ -158,7 +158,7 @@ public abstract class AbstractShape extends EngineObject implements Painting {
         }
     }
     /**Draw line using intorpolation*///todo exlpore this function
-    public static void Brezenheim(Vector2 v1, Vector2 v2, Graphics g) {
+    public void Brezenheim(Vector2 v1, Vector2 v2, Graphics g) {
         float dx = v2.x - v1.x;
         float dy = v2.y - v1.y;
         if (Math.abs(dx) > Math.abs(dy)) {
