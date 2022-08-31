@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 /**Class Line*/
 public class Line extends AbstractShape implements Resizing{
-    public int size;
+    public float size;
     public enum TYPE{//Line type
         HORIZONTAL,
         VERTICAL,
@@ -93,8 +93,13 @@ public class Line extends AbstractShape implements Resizing{
     @Override
     public void resize() {
         this.vertices.clear();//clear old vertices
-        this.start = new Vector2(-width, height);//ini new start
-        this.end = new Vector2(width, -height);//ini new end
+        if(width == 0 && height == 0){
+            this.start = this.start.mul(size);//ini new start
+            this.end = this.end.mul(size);//ini new end
+        }else {
+            this.start = new Vector2(-width, height);//ini new start
+            this.end = new Vector2(width, -height);//ini new end
+        }
         this.vertices.add(new Vector2(this.start));//add new start
         this.vertices.add(new Vector2(this.end));//add new end
         this.center = new Vector2((this.start.x + this.end.x)/2,(this.start.y + this.end.y)/2);//ini new center

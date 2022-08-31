@@ -200,4 +200,9 @@ public abstract class AbstractShape extends EngineObject implements Painting {
         if(x >= 0 & x < Scene.WIDTH && y >= 0 & y < Scene.HEIGHT)
             Scene.O_BUFFER[x][y] = o;
     }
+    /**Set color*/
+    public void setColor(Color c){
+        if(c != null) {this.color = c; this.colored = true;}
+        else this.colored = false;
+    }
 }
