@@ -41,6 +41,7 @@ public class ShapeObject extends EngineObject{
         this.center.add(dir);//move center on dir TODO
         for(var i: this.body){
             i.position.add(dir);//move all AbstractShapes
+            i.repaint = true;
         }
     }
     @Deprecated
@@ -64,7 +65,7 @@ public class ShapeObject extends EngineObject{
             sumY+= i.center.y + i.position.y;//compute sum centers Y
         }
         this.center = new Vector2(sumX/this.body.size(), sumY/this.body.size());//ini center
-        this.center.add(this.position);//ini position
+        this.position.add(o.position);//ini position
         for(var i: this.body){
             i.parent = this;//ini shape parent
         }

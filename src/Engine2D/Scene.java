@@ -20,6 +20,7 @@ public class Scene extends JPanel {
     public static ArrayList<ShapeObject> objects = new ArrayList<>();//set objects for painting
     private boolean Vaxis = false;//flag show axis XOY on scene
     private boolean Vcenter = false;//flag show objects centers
+    private boolean paintAll = true;
     public static Camera camera = new Camera();//camera
     public static ShapeObject[][] O_BUFFER;//TODO
     public int MaxX;//Max possible x
@@ -65,6 +66,18 @@ public class Scene extends JPanel {
                 //TODO
             }
         });
+    }
+    /**
+     * Method setPaintMode
+     * if mode = 0 set mode = AllPaint
+     * if mode = 1 set mode = PaintPart
+     * */
+    public void setPaintMode(int mode){
+        switch (mode) {
+            case 0 -> this.paintAll = true;
+            case 1 -> this.paintAll = false;
+            default -> {}
+        }
     }
     /**Method set Border
      * set border size and color*/
@@ -176,7 +189,12 @@ public class Scene extends JPanel {
                 g.fillRect((int) tmp.x, (int) tmp.y, 3, 3);//paint shape's center
             }
             for(var shape: it.body.toArray(new AbstractShape[0])) {
-                shape.paint(g, it);//paint shapes
+                if(this.paintAll)
+                    shape.paint(g, it);//paint shapes
+                else if(shape.repaint) {
+                    shape.paint(g, it);//paint shapes if it need repaint
+                    shape.repaint = false;
+                }
             }
         }
     }

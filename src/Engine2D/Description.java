@@ -1,6 +1,6 @@
 package Engine2D;
 
-import Engine2D.Alphabet.A;
+import Engine2D.Alphabet.*;
 import Engine2D.Alphabet.Letter;
 import UnityMath.Vector2;
 
@@ -20,40 +20,56 @@ import java.util.Map;
 public class Description extends AbstractShape implements Resizing{
     private String string;
     private int size;
-    public static Map<Character, Letter> alphabet = new HashMap<>();
+    private int space;
+    private static Map<Character, Letter> alphabet = new HashMap<>();
     static {
+        alphabet.put(' ', new Space());
         alphabet.put('A', new A());
+        alphabet.put('B', new B());
+        alphabet.put('C', new C());
+        alphabet.put('D', new D());
     }
+    private Letter[] string_o;
+
     /**
      * Inner constructor for ini vertices and color members.
      *
      * @param c
      */
-    public Description(String str, Vector2 pos, Color c) {
+    public Description(String str, Vector2 pos, Color c, int size, int space) {
         super(c);
         this.position = new Vector2(pos);
         this.string = str;
-        this.size = 10;
+        this.size = size;
         this.center = new Vector2(pos);
+        this.space = space;
+        string_o = fill();
+    }
+    private Letter[] fill(){
+        Letter[] tmp = new Letter[string.length()];
+
+        int count = 0;
+        for(var ch: this.string.toCharArray()){
+            tmp[count++] = alphabet.get(ch).get(size, color);
+        }
+        for(int i = 0; i < tmp.length; i++){
+            for(var line: tmp[i].lines){
+                line.position.add(new Vector2(size*space*i, 0));
+                line.resize();
+            }
+        }
+        return tmp;
     }
 
     @Override
     public void paint(Graphics g, ShapeObject o) {
-        for(var c: this.string.toCharArray()){
-            for(var line: alphabet.get(c).lines){
+        for(var letter: string_o){
+            for(var line: letter.lines){
+                line.angX = this.angX;
+                line.angY = this.angY;
+                line.angZ = this.angZ;
                 line.parent = o;
-                line.size = this.size;
-                line.position.add(new Vector2(5*size, 0));
-                line.resize();
                 line.paint(g, o);
-
-                line.size = 1.0f/this.size;
-                line.resize();
-            }
-        }
-        for(var c: this.string.toCharArray()){
-            for(var line: alphabet.get(c).lines){
-                line.position.add(new Vector2(-5*size, 0));
             }
         }
     }

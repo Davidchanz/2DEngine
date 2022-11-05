@@ -1,6 +1,6 @@
 package Engine2D;
 
-import MatrixTranspose.TransponeMatrix;
+import MatrixTransforms.MatrixTransforms;
 import UnityMath.Vector2;
 import UnityMath.Vector3;
 
@@ -15,6 +15,7 @@ public abstract class AbstractShape extends EngineObject implements Painting {
     public boolean colored;//flag fill shape color
     public int width;//shape's width
     public int height;//shape's height
+    public boolean repaint = false;
     public ShapeObject parent;//reference on parent ShapeObject
     /**Inner constructor for ini vertices and color members.*/
     protected AbstractShape(Color c){
@@ -31,13 +32,13 @@ public abstract class AbstractShape extends EngineObject implements Painting {
         Vector2 sceneCenter = new Vector2(0,0);//get 0,0 point
         Scene.toSceneDimension(sceneCenter);//get 0,0 point in screen dimension
 
-        TransponeMatrix.Offset(-(int)sceneCenter.x, -(int)sceneCenter.y, 0, newPoint);//move point in rotate's center
-        TransponeMatrix.RotationX(angX + parent.angX, newPoint, 0, 0, 0);//rotate in X axis
-        TransponeMatrix.RotationY(angY + parent.angY, newPoint, 0, 0, 0);//rotate in Y axis
-        TransponeMatrix.RotationZ(angZ + parent.angZ, newPoint, 0, 0, 0);//rotate in Z axis
-        TransponeMatrix.Offset((int)sceneCenter.x, (int)sceneCenter.y, 0, newPoint);//move point from rotate's center
-        //TransponeMatrix.Offset((int) this.position.x, (int) -(this.position.y), 0, newPoint);
-        TransponeMatrix.Offset((int) tmpPos.x, (int) -(tmpPos.y), 0, newPoint);//move point in shape's position
+        MatrixTransforms.Offset(-(int)sceneCenter.x, -(int)sceneCenter.y, 0, newPoint);//move point in rotate's center
+        MatrixTransforms.RotationX(this.angX + parent.angX, newPoint, 0, 0, 0);//rotate in X axis
+        MatrixTransforms.RotationY(this.angY + parent.angY, newPoint, 0, 0, 0);//rotate in Y axis
+        MatrixTransforms.RotationZ(this.angZ + parent.angZ, newPoint, 0, 0, 0);//rotate in Z axis
+        MatrixTransforms.Offset((int)sceneCenter.x, (int)sceneCenter.y, 0, newPoint);//move point from rotate's center
+        //MatrixTransforms.Offset((int) this.position.x, (int) -(this.position.y), 0, newPoint);
+        MatrixTransforms.Offset((int) tmpPos.x, (int) -(tmpPos.y), 0, newPoint);//move point in shape's position
 
         newPoint = new Vector3(Scene.camera.projection(new Vector2(newPoint.x, newPoint.y)), 0);//get point coord in camera projection
         return new Vector2(newPoint.x, newPoint.y);//return vertices point after transform
@@ -53,13 +54,13 @@ public abstract class AbstractShape extends EngineObject implements Painting {
             Vector2 sceneCenter = new Vector2(0,0);//get 0,0 point
             Scene.toSceneDimension(sceneCenter);//get 0,0 point in screen dimension
 
-            TransponeMatrix.Offset(-(int)sceneCenter.x, -(int)sceneCenter.y, 0, newPoint);//move point in rotate's center
-            TransponeMatrix.RotationX(angX+parent.angX, newPoint, 0, 0, 0);//rotate in X axis
-            TransponeMatrix.RotationY(angY+parent.angY, newPoint, 0, 0, 0);//rotate in Y axis
-            TransponeMatrix.RotationZ(angZ+parent.angZ, newPoint, 0, 0, 0);//rotate in Z axis
-            TransponeMatrix.Offset((int)sceneCenter.x, (int)sceneCenter.y, 0, newPoint);//move point from rotate's center
-            //TransponeMatrix.Offset((int) this.position.x, (int) -(this.position.y), 0, newPoint);
-            TransponeMatrix.Offset((int) tmpPos.x, (int) -(tmpPos.y), 0, newPoint);//move point in shape's position
+            MatrixTransforms.Offset(-(int)sceneCenter.x, -(int)sceneCenter.y, 0, newPoint);//move point in rotate's center
+            MatrixTransforms.RotationX(this.angX+parent.angX, newPoint, 0, 0, 0);//rotate in X axis
+            MatrixTransforms.RotationY(this.angY+parent.angY, newPoint, 0, 0, 0);//rotate in Y axis
+            MatrixTransforms.RotationZ(this.angZ+parent.angZ, newPoint, 0, 0, 0);//rotate in Z axis
+            MatrixTransforms.Offset((int)sceneCenter.x, (int)sceneCenter.y, 0, newPoint);//move point from rotate's center
+            //MatrixTransforms.Offset((int) this.position.x, (int) -(this.position.y), 0, newPoint);
+            MatrixTransforms.Offset((int) tmpPos.x, (int) -(tmpPos.y), 0, newPoint);//move point in shape's position
 
             newPoint = new Vector3(Scene.camera.projection(new Vector2(newPoint.x, newPoint.y)), 0);//get point coord in camera projection
 
@@ -77,11 +78,11 @@ public abstract class AbstractShape extends EngineObject implements Painting {
         Vector2 parentCenter = new Vector2(parent.center);//get parent center in new variable
         Scene.toSceneDimension(parentCenter);//get parent's center in screen dimension
 
-        TransponeMatrix.Offset(-(int)parentCenter.x, -(int)parentCenter.y, 0, newPoint);//move point in rotate's center
-        TransponeMatrix.RotationX(parent.angX, newPoint, 0, 0, 0);//rotate in X axis
-        TransponeMatrix.RotationY(parent.angY, newPoint, 0, 0, 0);//rotate in Y axis
-        TransponeMatrix.RotationZ(parent.angZ, newPoint, 0, 0, 0);//rotate in Z axis
-        TransponeMatrix.Offset((int)parentCenter.x, (int)parentCenter.y, 0, newPoint);//move point from rotate's center
+        MatrixTransforms.Offset(-(int)parentCenter.x, -(int)parentCenter.y, 0, newPoint);//move point in rotate's center
+        MatrixTransforms.RotationX(this.angX + parent.angX, newPoint, 0, 0, 0);//rotate in X axis
+        MatrixTransforms.RotationY(this.angY + parent.angY, newPoint, 0, 0, 0);//rotate in Y axis
+        MatrixTransforms.RotationZ(this.angZ + parent.angZ, newPoint, 0, 0, 0);//rotate in Z axis
+        MatrixTransforms.Offset((int)parentCenter.x, (int)parentCenter.y, 0, newPoint);//move point from rotate's center
 
         var tmp = new Vector2(newPoint.x, newPoint.y);//get Vector2 from Vector3 newPoint
         Scene.toScreenDimension(tmp);//get parent rotate center in Scene dimension
