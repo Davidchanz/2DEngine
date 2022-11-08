@@ -78,7 +78,6 @@ public class Description extends AbstractShape implements Resizing{
             for(var line: tmp[i].lines){
                 line.position.add(this.position);
                 line.position.add(new Vector2(size*space*i, 0));
-                line.resize();
             }
         }
         return tmp;
