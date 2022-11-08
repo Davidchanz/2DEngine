@@ -28,6 +28,28 @@ public class Description extends AbstractShape implements Resizing{
         alphabet.put('B', new B());
         alphabet.put('C', new C());
         alphabet.put('D', new D());
+        alphabet.put('E', new E());
+        alphabet.put('F', new F());
+        alphabet.put('G', new G());
+        alphabet.put('H', new H());
+        alphabet.put('I', new I());
+        alphabet.put('J', new J());
+        alphabet.put('K', new K());
+        alphabet.put('L', new L());
+        alphabet.put('M', new M());
+        alphabet.put('N', new N());
+        alphabet.put('O', new O());
+        alphabet.put('P', new P());
+        alphabet.put('Q', new Q());
+        alphabet.put('R', new R());
+        alphabet.put('S', new S());
+        alphabet.put('T', new T());
+        alphabet.put('U', new U());
+        alphabet.put('V', new V());
+        alphabet.put('W', new W());
+        alphabet.put('X', new X());
+        alphabet.put('Y', new Y());
+        alphabet.put('Z', new Z());
     }
     private Letter[] string_o;
 
@@ -54,6 +76,7 @@ public class Description extends AbstractShape implements Resizing{
         }
         for(int i = 0; i < tmp.length; i++){
             for(var line: tmp[i].lines){
+                line.position.add(this.position);
                 line.position.add(new Vector2(size*space*i, 0));
                 line.resize();
             }
@@ -77,5 +100,8 @@ public class Description extends AbstractShape implements Resizing{
     @Override
     public void resize() {
 
+    }
+    public String getText(){
+        return string;
     }
 }
